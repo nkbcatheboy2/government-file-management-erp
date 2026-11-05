@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS files (
+    id INT NOT NULL AUTO_INCREMENT,
+    file_no VARCHAR(50) NOT NULL,
+    file_subject VARCHAR(255) NOT NULL,
+    file_type VARCHAR(100) DEFAULT 'General',
+    origin_zone VARCHAR(50) DEFAULT 'Zone 1',
+    origin_section VARCHAR(100) DEFAULT 'Section 1',
+    received_date DATE NOT NULL,
+    current_zone VARCHAR(50) NOT NULL,
+    current_section VARCHAR(100) NOT NULL,
+    current_officer VARCHAR(100) NOT NULL,
+    current_status ENUM('Pending', 'In Progress', 'Disposed') DEFAULT 'Pending',
+    priority ENUM('Normal', 'Important', 'Urgent') DEFAULT 'Normal',
+    remarks TEXT NULL,
+    disposal_date DATE NULL,
+    last_movement_date DATETIME NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_files_file_no (file_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS movements (
+    id INT NOT NULL AUTO_INCREMENT,
+    file_id INT NOT NULL,
+    file_no VARCHAR(50) NOT NULL,
+    from_zone VARCHAR(50) NULL,
+    from_section VARCHAR(100) NULL,
+    from_officer VARCHAR(100) NULL,
+    to_zone VARCHAR(50) NOT NULL,
+    to_section VARCHAR(100) NULL,
+    to_officer VARCHAR(100) NOT NULL,
+    action VARCHAR(100) NULL,
+    forwarded_by VARCHAR(100) NULL,
+    acknowledged VARCHAR(3) NOT NULL DEFAULT 'No',
+    remarks TEXT NULL,
+    movement_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_movements_file_id (file_id),
+    KEY idx_movements_movement_date (movement_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

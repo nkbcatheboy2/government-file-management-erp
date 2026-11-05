@@ -1,0 +1,14 @@
+Options -Indexes
+
+<Files "config.php">
+    Require all denied
+</Files>
+
+<FilesMatch "\.(sql|log|tmp|bak)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule "(^|/)\.(git|env)(/|$)" - [F,L]
+</IfModule>

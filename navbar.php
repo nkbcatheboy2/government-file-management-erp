@@ -29,10 +29,14 @@
           </a>
         </li>
       </ul>
-      <div class="d-flex">
+      <div class="d-flex align-items-center gap-2">
         <a href="file_register.php?action=add" class="btn btn-warning btn-sm fw-semibold">
           <i class="fa-solid fa-plus-circle me-1"></i> + Register New File
         </a>
+        <form action="logout.php" method="POST" class="m-0">
+          <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
+          <button type="submit" class="btn btn-outline-light btn-sm">Log out</button>
+        </form>
       </div>
     </div>
   </div>

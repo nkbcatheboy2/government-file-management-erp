@@ -1,7 +1,14 @@
 <?php
+require_once 'auth.php';
+require_login();
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+        http_response_code(403);
+        exit('Invalid form token. Please reload the page and try again.');
+    }
+
     $file_no = $conn->real_escape_string($_POST['file_no']);
     $file_type = $conn->real_escape_string($_POST['file_type']);
     $file_subject = $conn->real_escape_string($_POST['file_subject']);

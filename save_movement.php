@@ -1,9 +1,16 @@
 <?php
+require_once 'auth.php';
+require_login();
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: movement_log.php');
     exit;
+}
+
+if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
+    http_response_code(403);
+    exit('Invalid form token. Please reload the page and try again.');
 }
 
 $file_id      = intval($_POST['file_id'] ?? 0);

@@ -1,4 +1,6 @@
 <?php
+require_once 'auth.php';
+require_login();
 require_once 'db.php';
 
 // Active registered files for the dropdown in modal
@@ -108,6 +110,7 @@ $movements = $conn->query("SELECT * FROM movements ORDER BY id DESC");
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <form action="save_movement.php" method="POST">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title fw-bold"><i class="fa-solid fa-paper-plane me-2"></i>Record File Movement / Transfer</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
